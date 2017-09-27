@@ -26,6 +26,7 @@ class RootTVC: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        // loadEmailList()
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,14 +105,17 @@ class RootTVC: UITableViewController {
         super.prepare(for: segue, sender: sender)
         
         if segue.identifier == "showDetail"{
-            var selectedRowIndex = self.tableView.indexPathForSelectedRow
-            let controller = segue.destination as! ViewController
-            
-           // let selectedEmail = emails
-            //controller.contentsLabel =
+            if let indexPath = self.tableView.indexPathForSelectedRow{
+                let destinationVC = segue.destination as! ViewController
+                let selectedEmail = emails[indexPath.row]
+                
+                destinationVC.titleLabel.text = selectedEmail.subject
+                destinationVC.contentsLabel.text = selectedEmail.contents
+                destinationVC.senderLabel.text = selectedEmail.sender
+            }
         }
-
     }
+
     
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ViewController, var email = sourceViewController.email {
@@ -129,6 +133,11 @@ class RootTVC: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
+    }
+    
+    //private Method
+    private func loadEmailList() {
+        
     }
 
 }
