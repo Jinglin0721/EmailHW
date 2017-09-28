@@ -64,9 +64,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="contentsLabel" destination="y5y-YE-WdU" id="Ffu-ue-d6y"/>
-                        <outlet property="senderLabel" destination="HSs-3c-F1a" id="O0f-kE-j8N"/>
-                        <outlet property="titleLabel" destination="Hna-vf-ziK" id="Hah-1r-sE3"/>
+                        <outlet property="contentsLabel" destination="y5y-YE-WdU" id="vCi-Cg-ud3"/>
+                        <outlet property="senderLabel" destination="HSs-3c-F1a" id="oBf-gd-a9d"/>
+                        <outlet property="titleLabel" destination="Hna-vf-ziK" id="loJ-iW-TVe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MsA-bd-cEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -84,7 +84,7 @@
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" textLabel="g0f-Ur-IUk" style="IBUITableViewCellStyleDefault" id="yay-u0-ejQ">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yay-u0-ejQ" id="Fvv-V0-91f">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -146,9 +146,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="R4n-Ci-fwe" kind="showDetail" identifier="showDetail" id="ze2-tD-JJE"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -191,7 +188,4 @@
             <point key="canvasLocation" x="-651" y="-156"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="ze2-tD-JJE"/>
-    </inferredMetricsTieBreakers>
 </document>

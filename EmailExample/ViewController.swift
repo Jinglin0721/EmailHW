@@ -13,15 +13,18 @@ class ViewController: UIViewController, CellSelectedDelegate {
     @IBOutlet weak var senderLabel: UILabel!
     @IBOutlet weak var contentsLabel: UILabel!
     
+    
     /*
      This value is either passed by `RootTVC` in `prepare(for:sender:)`
      or constructed as part of adding a new email.
      */
     var email: Email?
+    // var delegate: CellSelectedDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
     }
 
     override func didReceiveMemoryWarning() {

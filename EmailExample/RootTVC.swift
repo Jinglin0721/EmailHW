@@ -12,10 +12,17 @@ protocol CellSelectedDelegate {
     func read(email: Email)
 }
 
+protocol DataUpdatedDelegate {
+    func update(action: String, context: String, email: Email, indexPath: IndexPath)
+}
+
+
 class RootTVC: UITableViewController {
     
     var emails = [Email]()
     var delegate: CellSelectedDelegate?
+    var delegate2: DataUpdatedDelegate?
+    var context: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +33,6 @@ class RootTVC: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        // loadEmailList()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,6 +58,7 @@ class RootTVC: UITableViewController {
         
         let selectedEmail = emails[indexPath.row]
         delegate?.read(email: selectedEmail)
+        // destinationVC.shouldPerformSegue(withIdentifier: "showDetail", sender: self)
     }
 
     
@@ -80,10 +87,16 @@ class RootTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            emails.remove(at: indexPath.row)
+            let deletedEmail = emails.remove(at: indexPath.row)
+            delegate2?.update(action: "delete", context: context, email: deletedEmail, indexPath: indexPath)
+             //update the the data dictionary
             tableView.deleteRows(at: [indexPath], with: .fade)
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            let newEmail = Email(sender: "asu.edu", subject: "default", contents: "default")
+            
+            delegate2?.update(action: "add", context: "Inbox", email: newEmail, indexPath: indexPath)
         }    
     }
  
@@ -99,24 +112,19 @@ class RootTVC: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+   /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         super.prepare(for: segue, sender: sender)
         
         if segue.identifier == "showDetail"{
-            if let indexPath = self.tableView.indexPathForSelectedRow{
-                let destinationVC = segue.destination as! ViewController
-                let selectedEmail = emails[indexPath.row]
-                
-                destinationVC.titleLabel.text = selectedEmail.subject
-                destinationVC.contentsLabel.text = selectedEmail.contents
-                destinationVC.senderLabel.text = selectedEmail.sender
-            }
+            let destinationVC = segue.destination as! ViewController
+            destinationVC.delegate = self.delegate
         }
-    }
+    }*/
 
-    
+    /*
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ViewController, var email = sourceViewController.email {
             
@@ -133,11 +141,7 @@ class RootTVC: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
-    }
-    
-    //private Method
-    private func loadEmailList() {
-        
-    }
+    }*/
+
 
 }

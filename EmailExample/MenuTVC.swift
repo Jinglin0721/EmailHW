@@ -8,10 +8,35 @@
 
 import UIKit
 
-class MenuTVC: UITableViewController {
+class MenuTVC: UITableViewController, DataUpdatedDelegate {
     
+
+    func update(action: String, context: String, email: Email, indexPath: IndexPath) {
+        
+        switch action {
+            
+        case "add":
+            var sentEmails = dataDictionary["Sent"]
+            sentEmails?.append(Email(sender: "asu.edu", subject: "default", contents: "default"))
+            dataDictionary["Sent"] = sentEmails
+        
+        case "delete":
+            var inboxEmail = dataDictionary["Inbox"]
+            // remove returns a string
+            let deletedEmail = inboxEmail?.remove(at: indexPath.row)
+            dataDictionary["Inbox"] = inboxEmail
+            
+            var trashEmail = dataDictionary["Trash"]
+            trashEmail?.append(deletedEmail!)
+            dataDictionary["Trash"] = trashEmail
+            
+        default:
+            print("invalid value")
+        }
+    }
     var dataDictionary: [String:Array<Email>] = [:]
     var selectedRow = ""
+    var cellSelected: CellSelectedDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,13 +91,13 @@ class MenuTVC: UITableViewController {
     }
  
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+ 
 
     
     // Override to support editing the table view.
@@ -111,6 +136,9 @@ class MenuTVC: UITableViewController {
         
         let destVC = segue.destination as! RootTVC
         destVC.emails = dataDictionary[selectedRow]!
+        destVC.delegate = self.cellSelected
+        destVC.delegate2 = self
+        
         
         //1. which button got pressed
         //2. up-to-date data
